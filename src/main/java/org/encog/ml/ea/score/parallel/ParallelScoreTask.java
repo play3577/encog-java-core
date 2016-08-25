@@ -31,6 +31,7 @@ import org.encog.ml.ea.exception.EARuntimeError;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.score.AdjustScore;
 import org.encog.ml.ea.train.basic.BasicEA;
+import org.encog.neural.hyperneat.HyperNEATCODEC;
 
 /**
  * An individual threadable task for the parallel score calculation.
@@ -82,8 +83,9 @@ public class ParallelScoreTask implements Runnable {
 			double score;
 			try {
 				score = this.scoreFunction.calculateScore(phenotype);
-			} catch (EARuntimeError e) {
+			} catch (Exception e) {
 				score = Double.NaN;
+				System.err.println("Exception thrown while trying to get score. Setting score to NaN");
 			}
 			genome.setScore(score);
 			genome.setAdjustedScore(score);

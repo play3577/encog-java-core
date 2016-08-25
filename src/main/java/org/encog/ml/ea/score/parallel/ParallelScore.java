@@ -138,11 +138,11 @@ public class ParallelScore implements MultiThreadable {
 			taskExecutor = Executors.newFixedThreadPool(this.actualThreads);
 		}
 
-		for (Species species : this.population.getSpecies()) {
-			for (Genome genome : species.getMembers()) {
-				taskExecutor.execute(new ParallelScoreTask(genome, this));
-			}
-		}
+        for (Species species : this.population.getSpecies()) {
+            for (Genome genome : species.getMembers()) {
+                taskExecutor.execute(new ParallelScoreTask(genome, this));
+            }
+        }
 
 		taskExecutor.shutdown();
 		try {
