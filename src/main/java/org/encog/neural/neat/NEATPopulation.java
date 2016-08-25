@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import org.encog.Encog;
+import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationSteepenedSigmoid;
 import org.encog.mathutil.randomize.factory.RandomFactory;
@@ -111,7 +112,7 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 	/**
 	 * Default link weight range for HyperNEAT networks.
 	 */
-	public static final double DEFAULT_HYPERNEAT_WEIGHT_RANGE = 5.0;
+	public static final double DEFAULT_HYPERNEAT_MIN_WEIGHT = 0.2;
 
 	/**
 	 * Change the weight, do not allow the weight to go out of the weight range.
@@ -158,6 +159,13 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 	 * The weight range. Weights will be between -weight and +weight.
 	 */
 	private double weightRange = DEFAULT_NEAT_WEIGHT_RANGE;
+
+
+
+	/**
+	 *
+	 */
+	private double cppnMinWeight = DEFAULT_HYPERNEAT_MIN_WEIGHT;
 
 	/**
 	 * The best genome that we've currently decoded into the bestNetwork
@@ -211,6 +219,8 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 	 */
 	private double initialConnectionDensity = 0.1;
 
+	private ActivationFunction activationFunction = new ActivationBipolarSteepenedSigmoid();
+
 	/**
 	 * A factory to create random number generators.
 	 */
@@ -263,7 +273,8 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 		this.substrate = theSubstrate;
 		this.inputCount = 6;
 		this.outputCount = 2;
-		this.weightRange = DEFAULT_HYPERNEAT_WEIGHT_RANGE;
+		this.weightRange = DEFAULT_NEAT_WEIGHT_RANGE;
+		this.cppnMinWeight = DEFAULT_HYPERNEAT_MIN_WEIGHT;
 		HyperNEATGenome.buildCPPNActivationFunctions(this.activationFunctions);
 	}
 
@@ -374,6 +385,8 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 	public int getOutputCount() {
 		return this.outputCount;
 	}
+
+
 
 	/**
 	 * @return the randomNumberFactory
@@ -554,4 +567,19 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 		}
 	}
 
+    public double getCPPNMinWeight() {
+        return cppnMinWeight;
+    }
+
+    public void setCPPNMinWeight(double cppnMinWeight) {
+        this.cppnMinWeight = cppnMinWeight;
+	}
+
+	public ActivationFunction getActivationFunction() {
+		return activationFunction;
+	}
+
+	public void setActivationFunction(ActivationFunction activationFunction) {
+		this.activationFunction = activationFunction;
+	}
 }

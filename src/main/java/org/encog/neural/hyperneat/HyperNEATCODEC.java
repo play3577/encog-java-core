@@ -24,10 +24,13 @@
 package org.encog.neural.hyperneat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
 import org.encog.engine.network.activation.ActivationFunction;
+import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSteepenedSigmoid;
 import org.encog.ml.MLMethod;
 import org.encog.ml.data.MLData;
@@ -45,37 +48,37 @@ import org.encog.neural.neat.NEATPopulation;
 
 public class HyperNEATCODEC implements GeneticCODEC {
 
-	private double minWeight = 0.2;
-	private double maxWeight = 5.0;
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MLMethod decode(final Genome genome) {
+	public synchronized MLMethod decode(final Genome genome) {
 		final NEATPopulation pop = (NEATPopulation) genome.getPopulation();
 		final Substrate substrate = pop.getSubstrate();
 		return decode(pop, substrate, genome);
 	}
 
-	public MLMethod decode(final NEATPopulation pop, final Substrate substrate,
+	public synchronized MLMethod decode(final NEATPopulation pop, final Substrate substrate,
 			final Genome genome) {
 		// obtain the CPPN
 		final NEATCODEC neatCodec = new NEATCODEC();
 		final NEATNetwork cppn = (NEATNetwork) neatCodec.decode(genome);
+		final ActivationFunction activationFunction = pop.getActivationFunction();
 
 		final List<NEATLink> linkList = new ArrayList<NEATLink>();
 
 		final ActivationFunction[] afs = new ActivationFunction[substrate
 				.getNodeCount()];
 
-		final ActivationFunction af = new ActivationSteepenedSigmoid();
 		// all activation functions are the same
 		for (int i = 0; i < afs.length; i++) {
-			afs[i] = af;
+			afs[i] = activationFunction;
 		}
 
-		final double c = this.maxWeight / (1.0 - this.minWeight);
+		final double minWeight = pop.getCPPNMinWeight();
+		final double weightRange = pop.getWeightRange();
+
+		final double c = weightRange / (1.0 - minWeight);
 		final MLData input = new BasicMLData(cppn.getInputCount());
 
 		// First create all of the non-bias links.
@@ -93,8 +96,8 @@ public class HyperNEATCODEC implements GeneticCODEC {
 			final MLData output = cppn.compute(input);
 
 			double weight = output.getData(0);
-			if (Math.abs(weight) > this.minWeight) {
-				weight = (Math.abs(weight) - this.minWeight) * c
+			if (Math.abs(weight) > minWeight) {
+				weight = (Math.abs(weight) - minWeight) * c
 						* Math.signum(weight);
 				linkList.add(new NEATLink(source.getId(), target.getId(),
 						weight));
@@ -109,20 +112,14 @@ public class HyperNEATCODEC implements GeneticCODEC {
 			for (int i = 0; i < d; i++) {
 				input.setData(d + i, target.getLocation()[i]);
 			}
-
 			final MLData output = cppn.compute(input);
 
 			double biasWeight = output.getData(1);
-			if (Math.abs(biasWeight) > this.minWeight) {
-				biasWeight = (Math.abs(biasWeight) - this.minWeight) * c
+			if (Math.abs(biasWeight) > minWeight) {
+				biasWeight = (Math.abs(biasWeight) - minWeight) * c
 						* Math.signum(biasWeight);
 				linkList.add(new NEATLink(0, target.getId(), biasWeight));
 			}
-		}
-
-		// check for invalid neural network
-		if (linkList.size() == 0) {
-			return null;
 		}
 
 		Collections.sort(linkList);
@@ -132,7 +129,6 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 		network.setActivationCycles(substrate.getActivationCycles());
 		return network;
-
 	}
 
 	@Override
@@ -140,35 +136,4 @@ public class HyperNEATCODEC implements GeneticCODEC {
 		throw new GeneticError(
 				"Encoding of a HyperNEAT network is not supported.");
 	}
-
-	/**
-	 * @return the maxWeight
-	 */
-	public double getMaxWeight() {
-		return this.maxWeight;
-	}
-
-	/**
-	 * @return the minWeight
-	 */
-	public double getMinWeight() {
-		return this.minWeight;
-	}
-
-	/**
-	 * @param maxWeight
-	 *            the maxWeight to set
-	 */
-	public void setMaxWeight(final double maxWeight) {
-		this.maxWeight = maxWeight;
-	}
-
-	/**
-	 * @param minWeight
-	 *            the minWeight to set
-	 */
-	public void setMinWeight(final double minWeight) {
-		this.minWeight = minWeight;
-	}
-
 }
