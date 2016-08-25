@@ -123,7 +123,7 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 			return;
 		}
 
-		final double thresholdIncrement = 0.01;
+		final double thresholdIncrement = 0.5;
 
 		if (this.population.getSpecies().size() > this.maxNumberOfSpecies) {
 			this.compatibilityThreshold += thresholdIncrement;
@@ -413,13 +413,11 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 		}
 
 		final List<Species> speciesCollection = this.population.getSpecies();
+//        Collections.shuffle(speciesCollection);
 
 		if (speciesCollection.size() == 0) {
 			throw new EncogError("Can't speciate, there are no species.1");
 		}
-
-		// calculate compatibility between genomes and species
-		adjustCompatibilityThreshold();
 
 		// assign genomes to species (if any exist)
 		for (final Genome g : genomes) {
@@ -475,6 +473,8 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 
 		levelOff();
 
+		// calculate compatibility between genomes and species
+		adjustCompatibilityThreshold();
 	}
 
 	/**
