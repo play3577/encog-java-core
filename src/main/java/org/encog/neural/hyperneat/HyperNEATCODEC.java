@@ -48,6 +48,8 @@ import org.encog.neural.neat.NEATPopulation;
 
 public class HyperNEATCODEC implements GeneticCODEC {
 
+	double NNWeightRange = 3.0;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -76,9 +78,8 @@ public class HyperNEATCODEC implements GeneticCODEC {
 		}
 
 		final double minWeight = pop.getCPPNMinWeight();
-		final double weightRange = pop.getWeightRange();
+		final double CPPNWeightRange = pop.getWeightRange();
 
-		final double c = weightRange / (1.0 - minWeight);
 		final MLData input = new BasicMLData(cppn.getInputCount());
 
 		// First create all of the non-bias links.
@@ -97,10 +98,10 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 			double weight = output.getData(0);
 			if (Math.abs(weight) > minWeight) {
-				weight = (Math.abs(weight) - minWeight) * c
+				double scaledWeight = scaleToRange(Math.abs(weight), minWeight, 1, 0, NNWeightRange)
 						* Math.signum(weight);
 				linkList.add(new NEATLink(source.getId(), target.getId(),
-						weight));
+						scaledWeight));
 			}
 		}
 
@@ -116,9 +117,9 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 			double biasWeight = output.getData(1);
 			if (Math.abs(biasWeight) > minWeight) {
-				biasWeight = (Math.abs(biasWeight) - minWeight) * c
+				double scaledWeight = scaleToRange(Math.abs(biasWeight), minWeight, 1, 0, NNWeightRange)
 						* Math.signum(biasWeight);
-				linkList.add(new NEATLink(0, target.getId(), biasWeight));
+				linkList.add(new NEATLink(0, target.getId(), scaledWeight));
 			}
 		}
 
@@ -129,6 +130,10 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 		network.setActivationCycles(substrate.getActivationCycles());
 		return network;
+	}
+
+	public static double scaleToRange(final double valueIn, final double baseMin, final double baseMax, final double limitMin, final double limitMax) {
+		return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
 	}
 
 	@Override

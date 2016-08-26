@@ -86,6 +86,7 @@ public class ParallelScoreTask implements Runnable {
 			} catch (Exception e) {
 				score = Double.NaN;
 				System.err.println("Exception thrown while trying to get score. Setting score to NaN");
+				e.printStackTrace();
 			}
 			genome.setScore(score);
 			genome.setAdjustedScore(score);
