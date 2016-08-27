@@ -48,8 +48,6 @@ import org.encog.neural.neat.NEATPopulation;
 
 public class HyperNEATCODEC implements GeneticCODEC {
 
-	double NNWeightRange = 3.0;
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -79,6 +77,7 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 		final double minWeight = pop.getCPPNMinWeight();
 		final double CPPNWeightRange = pop.getWeightRange();
+		final double NNWeightRange = pop.getHyperNEATWeightRange();
 
 		final MLData input = new BasicMLData(cppn.getInputCount());
 
