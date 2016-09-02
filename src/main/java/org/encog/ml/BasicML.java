@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.encog.Encog;
+import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.util.csv.CSVFormat;
 
 /**

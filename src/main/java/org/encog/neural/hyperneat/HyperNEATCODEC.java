@@ -24,14 +24,10 @@
 package org.encog.neural.hyperneat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationLinear;
-import org.encog.engine.network.activation.ActivationSteepenedSigmoid;
 import org.encog.ml.MLMethod;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
@@ -63,7 +59,7 @@ public class HyperNEATCODEC implements GeneticCODEC {
 		// obtain the CPPN
 		final NEATCODEC neatCodec = new NEATCODEC();
 		final NEATNetwork cppn = (NEATNetwork) neatCodec.decode(genome);
-		final ActivationFunction activationFunction = pop.getActivationFunction();
+		final ActivationFunction activationFunction = pop.getHyperNEATNNActivationFunction();
 
 		final List<NEATLink> linkList = new ArrayList<NEATLink>();
 
@@ -77,7 +73,7 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 		final double minWeight = pop.getCPPNMinWeight();
 		final double CPPNWeightRange = pop.getWeightRange();
-		final double NNWeightRange = pop.getHyperNEATWeightRange();
+		final double NNWeightRange = pop.getHyperNEATNNWeightRange();
 
 		final MLData input = new BasicMLData(cppn.getInputCount());
 
@@ -104,7 +100,7 @@ public class HyperNEATCODEC implements GeneticCODEC {
 			}
 		}
 
-		// now create biased links
+/*		// now create biased links
 		input.clear();
 		final int d = substrate.getDimensions();
 		final List<SubstrateNode> biasedNodes = substrate.getBiasedNodes();
@@ -120,7 +116,7 @@ public class HyperNEATCODEC implements GeneticCODEC {
 						* Math.signum(biasWeight);
 				linkList.add(new NEATLink(0, target.getId(), scaledWeight));
 			}
-		}
+		}*/
 
 		Collections.sort(linkList);
 
