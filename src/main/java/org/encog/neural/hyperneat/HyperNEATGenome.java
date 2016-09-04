@@ -23,14 +23,11 @@
  */
 package org.encog.neural.hyperneat;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
-import org.encog.engine.network.activation.ActivationClippedLinear;
-import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationGaussian;
-import org.encog.engine.network.activation.ActivationSIN;
+import org.encog.engine.network.activation.*;
 import org.encog.neural.neat.NEATPopulation;
 import org.encog.neural.neat.training.NEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
@@ -53,11 +50,19 @@ public class HyperNEATGenome extends NEATGenome {
 	 */
 	public static void buildCPPNActivationFunctions(
 			final ChooseObject<ActivationFunction> activationFunctions) {
-		activationFunctions.add(0.25, new ActivationClippedLinear());
-		activationFunctions.add(0.25, new ActivationBipolarSteepenedSigmoid());
-		activationFunctions.add(0.25, new ActivationGaussian());
-		activationFunctions.add(0.25, new ActivationSIN());
+		buildCPPNActivationFunctionsInternal(activationFunctions, new ActivationFunction[] {
+                new ActivationSIN(),
+				new ActivationGaussian(),
+				new ActivationBipolarSteepenedSigmoid(),
+				new ActivationClippedLinear(),
+//				new ActivationStep(-1, 0, 1),
+		});
 		activationFunctions.finalizeStructure();
+	}
+
+	private static void buildCPPNActivationFunctionsInternal(ChooseObject<ActivationFunction> choose, ActivationFunction[] functions) {
+	    double prob = 1/(double)functions.length;
+        Arrays.stream(functions).forEach(a -> choose.add(prob, a));
 	}
 
 	/**
