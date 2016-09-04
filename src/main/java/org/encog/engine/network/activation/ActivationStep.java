@@ -98,7 +98,7 @@ public class ActivationStep implements ActivationFunction {
 	public final void activationFunction(final double[] x, final int start,
 			final int size) {
 		for (int i = start; i < start + size; i++) {
-			if (x[i] >= this.params[ActivationStep.PARAM_STEP_CENTER]) {
+			if (x[i] > this.params[ActivationStep.PARAM_STEP_CENTER]) {
 				x[i] = this.params[ActivationStep.PARAM_STEP_HIGH];
 			} else {
 				x[i] = this.params[ActivationStep.PARAM_STEP_LOW];
