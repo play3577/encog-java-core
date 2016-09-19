@@ -212,15 +212,8 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 	public boolean isNeuronNeeded(final NEATGenome target, final long neuronID) {
 
 		// do not remove bias or input neurons or output
-		for (final NEATNeuronGene gene : target.getNeuronsChromosome()) {
-			if (gene.getId() == neuronID) {
-				final NEATNeuronGene neuron = gene;
-				if ((neuron.getNeuronType() == NEATNeuronType.Input)
-						|| (neuron.getNeuronType() == NEATNeuronType.Bias)
-						|| (neuron.getNeuronType() == NEATNeuronType.Output)) {
-					return true;
-				}
-			}
+        if (isStartingNeuron(target, neuronID)) {
+			return true;
 		}
 
 		// Now check to see if the neuron is used in any links
@@ -234,6 +227,20 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 			}
 		}
 
+		return false;
+	}
+
+	public boolean isStartingNeuron(final NEATGenome target, final long neuronID) {
+		for (final NEATNeuronGene gene : target.getNeuronsChromosome()) {
+			if (gene.getId() == neuronID) {
+				final NEATNeuronGene neuron = gene;
+				if ((neuron.getNeuronType() == NEATNeuronType.Input)
+						|| (neuron.getNeuronType() == NEATNeuronType.Bias)
+						|| (neuron.getNeuronType() == NEATNeuronType.Output)) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

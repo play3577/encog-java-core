@@ -601,6 +601,8 @@ public class BasicEA implements EvolutionaryAlgorithm, MultiThreadable,
 
 		// handle any errors that might have happened in the threads
 		if (this.reportedError != null && !getShouldIgnoreExceptions()) {
+			// so that my gui thread won't swallow it..
+			this.reportedError.printStackTrace();
 			throw new GeneticError(this.reportedError);
 		}
 
