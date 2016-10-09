@@ -140,15 +140,22 @@ public class ParallelScore implements MultiThreadable {
 
         for (Species species : this.population.getSpecies()) {
             for (Genome genome : species.getMembers()) {
-                taskExecutor.execute(new ParallelScoreTask(genome, this));
+                if (this.threads == 1) {
+					new ParallelScoreTask(genome, this).run();
+				} else {
+					taskExecutor.execute(new ParallelScoreTask(genome, this));
+				}
             }
         }
 
 		taskExecutor.shutdown();
-		try {
-			taskExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
-		} catch (InterruptedException e) {
-			throw new GeneticError(e);
+
+		if (threads > 1) {
+			try {
+				taskExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+			} catch (InterruptedException e) {
+				throw new GeneticError(e);
+			}
 		}
 
 		if( this.reportedError!=null ) {

@@ -92,7 +92,7 @@ public class SelectProportion implements SelectLinks {
 		
 		if( !mutated ) {
 			int idx = rnd.nextInt(genome.getLinksChromosome().size());
-			NEATLinkGene linkGene  = genome.getLinksChromosome().get(idx);
+			NEATLinkGene linkGene = genome.getLinksChromosome().get(idx);
 			result.add(linkGene);	
 		}
 		

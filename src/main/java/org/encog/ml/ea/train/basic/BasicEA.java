@@ -594,7 +594,17 @@ public class BasicEA implements EvolutionaryAlgorithm, MultiThreadable,
 
 		// run all threads and wait for them to finish
 		try {
-			this.taskExecutor.invokeAll(this.threadList);
+			if (actualThreadCount == 1) {
+				this.threadList.forEach(t -> {
+					try {
+						t.call();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+			} else {
+				this.taskExecutor.invokeAll(this.threadList);
+			}
 		} catch (final InterruptedException e) {
 			EncogLogging.log(e);
 		}

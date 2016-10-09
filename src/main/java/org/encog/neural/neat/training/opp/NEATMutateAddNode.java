@@ -66,6 +66,11 @@ public class NEATMutateAddNode extends NEATMutation {
 				offspringIndex);
 		int countTrysToFindOldLink = getOwner().getMaxTries();
 
+		// cannot perform operation if there are no links
+		if (target.getLinksChromosome().isEmpty()) {
+			return;
+		}
+
 		final NEATPopulation pop = ((NEATPopulation) target.getPopulation());
 
 		// the link to split

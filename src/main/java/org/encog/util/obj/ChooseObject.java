@@ -108,4 +108,12 @@ public class ChooseObject<T> implements Serializable {
 	public T pickFirst() {
 		return this.list.get(0).getObj();
 	}
+
+	/**
+	 * bad. misleading. easy workaround for my project
+	 * @param object
+	 */
+	public void remove(T object) {
+		list.removeIf(elem -> elem.getObj().getClass() == object.getClass());
+	}
 }

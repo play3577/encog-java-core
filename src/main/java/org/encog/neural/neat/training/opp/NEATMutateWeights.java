@@ -94,6 +94,12 @@ public class NEATMutateWeights extends NEATMutation {
 			final int offspringIndex) {
 		final NEATGenome target = obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
+
+        // cannot perform operation if there are no links
+		if (target.getLinksChromosome().isEmpty()) {
+			return;
+		}
+
 		final double weightRange = ((NEATPopulation)getOwner().getPopulation()).getWeightRange();
 		final List<NEATLinkGene> list = this.linkSelection.selectLinks(rnd,
 				target);

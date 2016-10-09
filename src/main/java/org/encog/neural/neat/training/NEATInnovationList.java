@@ -141,9 +141,7 @@ public class NEATInnovationList implements Serializable {
 				findInnovation(fromID, toID);
 			}
 		}
-		
-		
-		
+
 	}
 
 	/**

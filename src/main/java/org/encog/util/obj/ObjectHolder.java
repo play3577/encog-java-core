@@ -61,4 +61,8 @@ public class ObjectHolder<T> implements Serializable {
 	public double getProbability() {
 		return probability;
 	}
+
+	public String toString() {
+		return probability + ": " + obj;
+	}
 }
