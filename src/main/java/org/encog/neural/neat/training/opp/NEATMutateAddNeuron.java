@@ -30,7 +30,7 @@ import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATNeuronType;
 import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATInnovation;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
@@ -53,7 +53,7 @@ import org.encog.neural.neat.training.NEATNeuronGene;
  * 
  * Automatic feature selection in neuroevolution
  */
-public class NEATMutateAddNode extends NEATMutation {
+public class NEATMutateAddNeuron extends NEATMutation {
 
 	/**
 	 * {@inheritDoc}
@@ -62,7 +62,7 @@ public class NEATMutateAddNode extends NEATMutation {
 	public void performOperation(final Random rnd, final Genome[] parents,
 			final int parentIndex, final Genome[] offspring,
 			final int offspringIndex) {
-		final NEATGenome target = obtainGenome(parents, parentIndex, offspring,
+		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 		int countTrysToFindOldLink = getOwner().getMaxTries();
 
@@ -76,8 +76,8 @@ public class NEATMutateAddNode extends NEATMutation {
 		// the link to split
 		NEATLinkGene splitLink = null;
 
-		final int sizeBias = ((NEATGenome)parents[0]).getInputCount()
-				+ ((NEATGenome)parents[0]).getOutputCount() + 10;
+		final int sizeBias = ((SingleNEATGenome)parents[0]).getInputCount()
+				+ ((SingleNEATGenome)parents[0]).getOutputCount() + 10;
 
 		// if there are not at least
 		int upperLimit;

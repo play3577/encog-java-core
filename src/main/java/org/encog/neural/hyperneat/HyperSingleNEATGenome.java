@@ -29,7 +29,7 @@ import java.util.Random;
 
 import org.encog.engine.network.activation.*;
 import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
 import org.encog.util.obj.ChooseObject;
@@ -37,7 +37,7 @@ import org.encog.util.obj.ChooseObject;
 /**
  * A HyperNEAT genome.
  */
-public class HyperNEATGenome extends NEATGenome {
+public class HyperSingleNEATGenome extends SingleNEATGenome {
 
 	/**
 	 * A HyperNEAT genome.
@@ -68,11 +68,11 @@ public class HyperNEATGenome extends NEATGenome {
 	/**
 	 * Construct a HyperNEAT genome.
 	 */
-	public HyperNEATGenome() {
+	public HyperSingleNEATGenome() {
 
 	}
 
-	public HyperNEATGenome(final HyperNEATGenome other) {
+	public HyperSingleNEATGenome(final HyperSingleNEATGenome other) {
 		super(other);
 	}
 
@@ -83,9 +83,9 @@ public class HyperNEATGenome extends NEATGenome {
 	 * @param inputCount The input count.
 	 * @param outputCount The output count.
 	 */
-	public HyperNEATGenome(final List<NEATNeuronGene> neurons,
-			final List<NEATLinkGene> links, final int inputCount,
-			final int outputCount) {
+	public HyperSingleNEATGenome(final List<NEATNeuronGene> neurons,
+								 final List<NEATLinkGene> links, final int inputCount,
+								 final int outputCount) {
 		super(neurons, links, inputCount, outputCount);
 	}
 
@@ -97,9 +97,9 @@ public class HyperNEATGenome extends NEATGenome {
 	 * @param outputCount The output count.
 	 * @param connectionDensity The connection densitoy, 1.0 for fully connected.
 	 */
-	public HyperNEATGenome(final Random rnd, final NEATPopulation pop,
-			final int inputCount, final int outputCount,
-			final double connectionDensity) {
+	public HyperSingleNEATGenome(final Random rnd, final NEATPopulation pop,
+								 final int inputCount, final int outputCount,
+								 final double connectionDensity) {
 		super(rnd, pop, inputCount, outputCount, connectionDensity);
 
 	}
