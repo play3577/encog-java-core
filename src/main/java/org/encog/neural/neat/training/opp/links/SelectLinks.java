@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 
 /**
@@ -64,6 +64,6 @@ public interface SelectLinks {
 	 * @param genome The genome to select from.
 	 * @return A List of link genomes.
 	 */
-	List<NEATLinkGene> selectLinks(Random rnd, NEATGenome genome);
+	List<NEATLinkGene> selectLinks(Random rnd, SingleNEATGenome genome);
 
 }

@@ -34,12 +34,9 @@ import org.encog.ml.ea.species.BasicSpecies;
 import org.encog.ml.ea.species.Species;
 import org.encog.neural.hyperneat.FactorHyperNEATGenome;
 import org.encog.neural.hyperneat.HyperNEATCODEC;
-import org.encog.neural.hyperneat.HyperNEATGenome;
-import org.encog.neural.neat.training.NEATGenome;
-import org.encog.neural.neat.training.NEATInnovation;
-import org.encog.neural.neat.training.NEATInnovationList;
-import org.encog.neural.neat.training.NEATLinkGene;
-import org.encog.neural.neat.training.NEATNeuronGene;
+import org.encog.neural.hyperneat.HyperSingleNEATGenome;
+import org.encog.neural.neat.training.*;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.persist.EncogFileSection;
 import org.encog.persist.EncogPersistor;
 import org.encog.persist.EncogReadHelper;
@@ -146,7 +143,7 @@ public class PersistNEATPopulation implements EncogPersistor {
 				}
 			} else if (section.getSectionName().equals("NEAT-POPULATION")
 					&& section.getSubSectionName().equals("SPECIES")) {
-				NEATGenome lastGenome = null;
+				SingleNEATGenome lastGenome = null;
 				BasicSpecies lastSpecies = null;
 
 				for (final String line : section.getLines()) {
@@ -164,7 +161,7 @@ public class PersistNEATPopulation implements EncogPersistor {
 						result.getSpecies().add(lastSpecies);
 					} else if (cols.get(0).equalsIgnoreCase("g")) {
 						final boolean isLeader = lastGenome == null;
-						lastGenome = new NEATGenome();
+						lastGenome = new SingleNEATGenome();
 						lastGenome.setInputCount(result.getInputCount());
 						lastGenome.setOutputCount(result.getOutputCount());
 						lastGenome.setSpecies(lastSpecies);
@@ -214,7 +211,7 @@ public class PersistNEATPopulation implements EncogPersistor {
 						.get(NEATPopulation.PROPERTY_NEAT_ACTIVATION);
 
 				if (afStr.equalsIgnoreCase(PersistNEATPopulation.TYPE_CPPN)) {
-					HyperNEATGenome.buildCPPNActivationFunctions(result
+					HyperSingleNEATGenome.buildCPPNActivationFunctions(result
 							.getActivationFunctions());
 				} else {
 					result.setNEATActivationFunction(EncogFileSection
@@ -325,14 +322,14 @@ public class PersistNEATPopulation implements EncogPersistor {
 		out.writeLine();
 
 		for (final Genome genome : species.getMembers()) {
-			final NEATGenome neatGenome = (NEATGenome) genome;
+			final SingleNEATGenome singleNeatGenome = (SingleNEATGenome) genome;
 			out.addColumn("g");
-			out.addColumn(neatGenome.getAdjustedScore());
-			out.addColumn(neatGenome.getScore());
-			out.addColumn(neatGenome.getBirthGeneration());
+			out.addColumn(singleNeatGenome.getAdjustedScore());
+			out.addColumn(singleNeatGenome.getScore());
+			out.addColumn(singleNeatGenome.getBirthGeneration());
 			out.writeLine();
 
-			for (final NEATNeuronGene neatNeuronGene : neatGenome
+			for (final NEATNeuronGene neatNeuronGene : singleNeatGenome
 					.getNeuronsChromosome()) {
 				out.addColumn("n");
 				out.addColumn(neatNeuronGene.getId());
@@ -342,7 +339,7 @@ public class PersistNEATPopulation implements EncogPersistor {
 				out.addColumn(neatNeuronGene.getInnovationId());
 				out.writeLine();
 			}
-			for (final NEATLinkGene neatLinkGene : neatGenome
+			for (final NEATLinkGene neatLinkGene : singleNeatGenome
 					.getLinksChromosome()) {
 				out.addColumn("l");
 				out.addColumn(neatLinkGene.getId());

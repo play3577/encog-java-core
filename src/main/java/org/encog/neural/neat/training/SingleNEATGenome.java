@@ -57,17 +57,7 @@ import org.encog.util.Format;
  * Automatic feature selection in neuroevolution
  * 
  */
-public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializable {
-
-	/**
-	 * Serial id.
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * The number of inputs.
-	 */
-	private int inputCount;
+public class SingleNEATGenome extends NEATGenome {
 
 	/**
 	 * The list that holds the links.
@@ -75,19 +65,9 @@ public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializ
 	private final List<NEATLinkGene> linksList = new ArrayList<NEATLinkGene>();
 
 	/**
-	 * THe network depth.
-	 */
-	private int networkDepth;
-
-	/**
 	 * The list that holds the neurons.
 	 */
 	private final List<NEATNeuronGene> neuronsList = new ArrayList<NEATNeuronGene>();
-
-	/**
-	 * The number of outputs.
-	 */
-	private int outputCount;
 
 	/**
 	 * Construct a genome by copying another.
@@ -157,7 +137,7 @@ public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializ
 	 * @param outputCount The output count.
 	 * @param connectionDensity The connection density.
 	 */
-	public SingleNEATGenome(final Random rnd, final NEATPopulation pop,
+	public SingleNEATGenome(final Random rnd, final AbstractNEATPopulation pop,
 							final int inputCount, final int outputCount,
 							double connectionDensity) {
 		setAdjustedScore(0);
@@ -235,39 +215,10 @@ public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializ
 	}
 
 	/**
-	 * @return The number of input neurons.
-	 */
-	public int getInputCount() {
-		return this.inputCount;
-	}
-
-	/**
-	 * @return The network depth.
-	 */
-	public int getNetworkDepth() {
-		return this.networkDepth;
-	}
-
-	/**
 	 * @return The number of genes in the links chromosome.
 	 */
 	public int getNumGenes() {
 		return this.linksList.size();
-	}
-
-	/**
-	 * @return The output count.
-	 */
-	public int getOutputCount() {
-		return this.outputCount;
-	}
-
-	/**
-	 * @param networkDepth
-	 *            the networkDepth to set
-	 */
-	public void setNetworkDepth(final int networkDepth) {
-		this.networkDepth = networkDepth;
 	}
 
 	/**
@@ -289,22 +240,6 @@ public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializ
 	 */
 	public List<NEATNeuronGene> getNeuronsChromosome() {
 		return this.neuronsList;
-	}
-
-	/**
-	 * @param inputCount
-	 *            the inputCount to set
-	 */
-	public void setInputCount(int inputCount) {
-		this.inputCount = inputCount;
-	}
-
-	/**
-	 * @param outputCount
-	 *            the outputCount to set
-	 */
-	public void setOutputCount(int outputCount) {
-		this.outputCount = outputCount;
 	}
 
 	/**
@@ -336,14 +271,6 @@ public class SingleNEATGenome extends BasicGenome implements Cloneable, Serializ
 			}
 			map.put(key, nlg);
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void copy(Genome source) {
-		throw new UnsupportedOperationException();
 	}
 
 	/**

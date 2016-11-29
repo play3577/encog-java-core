@@ -222,7 +222,7 @@ public final class PersistConst {
 	/**
 	 * NEAT genome.
 	 */
-	public static final String TYPE_NEAT_GENOME = "NEATGenome";
+	public static final String TYPE_NEAT_GENOME = "SingleNEATGenome";
 	
 	/**
 	 * Enabled.

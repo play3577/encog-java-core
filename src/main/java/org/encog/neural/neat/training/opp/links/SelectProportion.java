@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 
 /**
@@ -78,7 +78,7 @@ public class SelectProportion implements SelectLinks {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<NEATLinkGene> selectLinks(Random rnd, NEATGenome genome) {
+	public List<NEATLinkGene> selectLinks(Random rnd, SingleNEATGenome genome) {
 		List<NEATLinkGene> result = new ArrayList<NEATLinkGene>();
 		
 		boolean mutated = false;

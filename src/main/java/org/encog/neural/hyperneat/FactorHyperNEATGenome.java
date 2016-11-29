@@ -29,7 +29,7 @@ import java.util.Random;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATGenomeFactory;
 import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
@@ -42,8 +42,8 @@ public class FactorHyperNEATGenome implements NEATGenomeFactory {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public NEATGenome factor() {
-		return new HyperNEATGenome();
+	public SingleNEATGenome factor() {
+		return new HyperSingleNEATGenome();
 	}
 
 	/**
@@ -51,27 +51,27 @@ public class FactorHyperNEATGenome implements NEATGenomeFactory {
 	 */
 	@Override
 	public Genome factor(final Genome other) {
-		return new HyperNEATGenome((HyperNEATGenome) other);
+		return new HyperSingleNEATGenome((HyperSingleNEATGenome) other);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public NEATGenome factor(final List<NEATNeuronGene> neurons,
-			final List<NEATLinkGene> links, final int inputCount,
-			final int outputCount) {
-		return new HyperNEATGenome(neurons, links, inputCount, outputCount);
+	public SingleNEATGenome factor(final List<NEATNeuronGene> neurons,
+								   final List<NEATLinkGene> links, final int inputCount,
+								   final int outputCount) {
+		return new HyperSingleNEATGenome(neurons, links, inputCount, outputCount);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public NEATGenome factor(final Random rnd, final NEATPopulation pop,
-			final int inputCount, final int outputCount,
-			final double connectionDensity) {
-		return new HyperNEATGenome(rnd, pop, inputCount, outputCount,
+	public SingleNEATGenome factor(final Random rnd, final NEATPopulation pop,
+								   final int inputCount, final int outputCount,
+								   final double connectionDensity) {
+		return new HyperSingleNEATGenome(rnd, pop, inputCount, outputCount,
 				connectionDensity);
 	}
 }

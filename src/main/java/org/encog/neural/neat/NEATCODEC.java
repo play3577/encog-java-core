@@ -36,13 +36,14 @@ import org.encog.ml.ea.codec.GeneticCODEC;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.genetic.GeneticError;
 import org.encog.neural.NeuralNetworkError;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
 /**
  * This CODEC is used to create phenomes (NEATNetwork) objects using a genome
- * (NEATGenome). Conversion is only one direction. You are allowed to transform
+ * (SingleNEATGenome). Conversion is only one direction. You are allowed to transform
  * a NEAT genome into a NEATNetwork, but you cannot transform a NEAT phenome
  * back into a genome. The main reason is I have not found a great deal of need
  * to go the other direction. If someone ever does find a need and creates a
@@ -72,11 +73,11 @@ public class NEATCODEC implements GeneticCODEC, Serializable {
 	 */
 	@Override
 	public MLMethod decode(final Genome genome) {
-		final NEATGenome neatGenome = (NEATGenome) genome;
-		final NEATPopulation pop = (NEATPopulation) neatGenome.getPopulation();
-		final List<NEATNeuronGene> neuronsChromosome = neatGenome
+		final SingleNEATGenome singleNeatGenome = (SingleNEATGenome) genome;
+		final AbstractNEATPopulation pop = (AbstractNEATPopulation) singleNeatGenome.getPopulation();
+		final List<NEATNeuronGene> neuronsChromosome = singleNeatGenome
 				.getNeuronsChromosome();
-		final List<NEATLinkGene> linksChromosome = neatGenome
+		final List<NEATLinkGene> linksChromosome = singleNeatGenome
 				.getLinksChromosome();
 
 		if (neuronsChromosome.get(0).getNeuronType() != NEATNeuronType.Bias) {
@@ -111,8 +112,8 @@ public class NEATCODEC implements GeneticCODEC, Serializable {
 
 		Collections.sort(links);
 
-		final NEATNetwork network = new NEATNetwork(neatGenome.getInputCount(),
-				neatGenome.getOutputCount(), links, afs);
+		final NEATNetwork network = new NEATNetwork(singleNeatGenome.getInputCount(),
+				singleNeatGenome.getOutputCount(), links, afs);
 
 		network.setActivationCycles(pop.getActivationCycles());
 		return network;

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 
 /**
@@ -88,7 +88,7 @@ public class SelectFixed implements SelectLinks {
 	 */
 	@Override
 	public List<NEATLinkGene> selectLinks(final Random rnd,
-			final NEATGenome genome) {
+			final SingleNEATGenome genome) {
 		final List<NEATLinkGene> result = new ArrayList<NEATLinkGene>();
 		final int cnt = Math.min(this.linkCount, genome.getLinksChromosome()
 				.size());

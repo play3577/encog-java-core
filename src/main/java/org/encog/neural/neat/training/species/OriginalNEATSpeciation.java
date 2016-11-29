@@ -25,7 +25,7 @@ package org.encog.neural.neat.training.species;
 
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.species.ThresholdSpeciation;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 
 /**
  * The original NEAT Speciation Strategy. This is currently the only speciation
@@ -91,8 +91,8 @@ public class OriginalNEATSpeciation extends ThresholdSpeciation {
 		double numMatched = 0;
 		double weightDifference = 0;
 
-		final NEATGenome genome1 = (NEATGenome)gen1;
-		final NEATGenome genome2 = (NEATGenome)gen2;
+		final SingleNEATGenome genome1 = (SingleNEATGenome)gen1;
+		final SingleNEATGenome genome2 = (SingleNEATGenome)gen2;
 		
 		final int genome1Size = genome1.getLinksChromosome().size();
 		final int genome2Size = genome2.getLinksChromosome().size();

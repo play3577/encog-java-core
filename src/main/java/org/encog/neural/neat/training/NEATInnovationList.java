@@ -59,7 +59,7 @@ public class NEATInnovationList implements Serializable {
 	/**
 	 * The population.
 	 */
-	private NEATPopulation population;
+	private AbstractNEATPopulation population;
 
 	/**
 	 * The list of innovations.
@@ -119,7 +119,7 @@ public class NEATInnovationList implements Serializable {
 	 * Construct an innovation list, that includes the initial innovations.
 	 * @param population The population to base this innovation list on.
 	 */
-	public NEATInnovationList(final NEATPopulation population) {
+	public NEATInnovationList(final AbstractNEATPopulation population) {
 
 		this.population = population;
 

@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
 import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATNeuronType;
-import org.encog.neural.neat.training.NEATGenome;
-import org.encog.neural.neat.training.NEATLinkGene;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
 /**
@@ -59,7 +58,7 @@ public class NEATMutateRemoveNeuron extends NEATMutation {
                                  final int parentIndex, final Genome[] offspring,
                                  final int offspringIndex) {
 
-        final NEATGenome targetGenome = obtainGenome(parents, parentIndex, offspring,
+        final SingleNEATGenome targetGenome = (SingleNEATGenome)obtainGenome(parents, parentIndex, offspring,
                 offspringIndex);
 
         final List<NEATNeuronGene> hiddenNeurons = targetGenome.getNeuronsChromosome().stream()

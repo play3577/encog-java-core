@@ -27,7 +27,7 @@ import java.util.Random;
 
 import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 
 /**
@@ -61,7 +61,7 @@ public class NEATMutateRemoveLink extends NEATMutation {
 			final int parentIndex, final Genome[] offspring,
 			final int offspringIndex) {
 
-		final NEATGenome target = obtainGenome(parents, parentIndex, offspring,
+		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 
 		if (target.getLinksChromosome().size() < NEATMutateRemoveLink.MIN_LINK) {

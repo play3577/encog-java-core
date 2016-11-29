@@ -34,7 +34,7 @@ import org.encog.ml.ea.sort.SortGenomesForSpecies;
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;
 import org.encog.neural.neat.NEATPopulation;
 import org.encog.neural.neat.NEATUtil;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.networks.XOR;
 import org.encog.neural.networks.training.TrainingSetScore;
 import org.junit.Assert;
@@ -51,14 +51,14 @@ public class TestSortGenomesForSpecies {
 		CalculateScore score = new TrainingSetScore(trainingSet);
 		final EvolutionaryAlgorithm train = NEATUtil.constructNEATTrainer(pop,score);
 				
-		NEATGenome genome1 = new NEATGenome();
+		SingleNEATGenome genome1 = new SingleNEATGenome();
 		genome1.setAdjustedScore(3.0);
-		NEATGenome genome2 = new NEATGenome();
+		SingleNEATGenome genome2 = new SingleNEATGenome();
 		genome2.setAdjustedScore(2.0);
-		NEATGenome genome3 = new NEATGenome();
+		SingleNEATGenome genome3 = new SingleNEATGenome();
 		genome3.setAdjustedScore(1.0);
 		
-		List<NEATGenome> list = new ArrayList<NEATGenome>();
+		List<SingleNEATGenome> list = new ArrayList<SingleNEATGenome>();
 		list.add(genome1);
 		list.add(genome2);
 		list.add(genome3);
@@ -78,16 +78,16 @@ public class TestSortGenomesForSpecies {
 		CalculateScore score = new TrainingSetScore(trainingSet);
 		final EvolutionaryAlgorithm train = NEATUtil.constructNEATTrainer(pop,score);
 				
-		NEATGenome genome1 = new NEATGenome();
+		SingleNEATGenome genome1 = new SingleNEATGenome();
 		genome1.setAdjustedScore(3.0);
-		NEATGenome genome2 = new NEATGenome();
+		SingleNEATGenome genome2 = new SingleNEATGenome();
 		genome2.setAdjustedScore(2.0);
 		genome2.setBirthGeneration(200);
-		NEATGenome genome3 = new NEATGenome();
+		SingleNEATGenome genome3 = new SingleNEATGenome();
 		genome3.setAdjustedScore(2.0);
 		genome3.setBirthGeneration(100);
 		
-		List<NEATGenome> list = new ArrayList<NEATGenome>();
+		List<SingleNEATGenome> list = new ArrayList<SingleNEATGenome>();
 		list.add(genome1);
 		list.add(genome2);
 		list.add(genome3);

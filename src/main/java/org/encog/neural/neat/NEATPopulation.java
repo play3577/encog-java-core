@@ -23,7 +23,6 @@
  */
 package org.encog.neural.neat;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import org.encog.Encog;
@@ -31,20 +30,17 @@ import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationSteepenedSigmoid;
 import org.encog.mathutil.randomize.factory.RandomFactory;
-import org.encog.ml.MLError;
-import org.encog.ml.MLRegression;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.ea.codec.GeneticCODEC;
 import org.encog.ml.ea.genome.Genome;
-import org.encog.ml.ea.population.BasicPopulation;
 import org.encog.ml.ea.species.BasicSpecies;
 import org.encog.neural.NeuralNetworkError;
 import org.encog.neural.hyperneat.FactorHyperNEATGenome;
 import org.encog.neural.hyperneat.HyperNEATCODEC;
-import org.encog.neural.hyperneat.HyperNEATGenome;
+import org.encog.neural.hyperneat.HyperSingleNEATGenome;
 import org.encog.neural.hyperneat.substrate.Substrate;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.NEATInnovationList;
 import org.encog.util.identity.BasicGenerateID;
 import org.encog.util.identity.GenerateID;
@@ -65,8 +61,7 @@ import org.encog.util.obj.ChooseObject;
  * 
  * Automatic feature selection in neuroevolution
  */
-public class NEATPopulation extends BasicPopulation implements Serializable,
-		MLError, MLRegression {
+public class NEATPopulation extends AbstractNEATPopulation {
 
 	/**
 	 * The default survival rate.
@@ -267,6 +262,7 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 					"Population must have more than zero genomes.");
 		}
 
+
 	}
 
 	/**
@@ -284,7 +280,7 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 		this.outputCount = 2;
 		this.weightRange = DEFAULT_NEAT_WEIGHT_RANGE;
 		this.cppnMinWeight = DEFAULT_HYPERNEAT_MIN_WEIGHT;
-		HyperNEATGenome.buildCPPNActivationFunctions(this.activationFunctions);
+		HyperSingleNEATGenome.buildCPPNActivationFunctions(this.activationFunctions);
 	}
 
 	/**
@@ -464,7 +460,7 @@ public class NEATPopulation extends BasicPopulation implements Serializable,
 
 		// create the initial population
 		for (int i = 0; i < getPopulationSize(); i++) {
-			final NEATGenome genome = getGenomeFactory().factor(rnd, this,
+			final Genome genome = getGenomeFactory().factor(rnd, this,
 					this.inputCount, this.outputCount,
 					this.initialConnectionDensity);
 			defaultSpecies.add(genome);

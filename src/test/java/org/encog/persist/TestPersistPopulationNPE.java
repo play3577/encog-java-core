@@ -64,7 +64,7 @@ public final class TestPersistPopulationNPE
 		final ByteArrayOutputStream serialized2 = new ByteArrayOutputStream();
 		new PersistNEATPopulation().save(serialized2, training2.getPopulation());
 
-		// NEATTraining.init() randomly fails with a NPE in NEATGenome.getCompatibilityScore()
+		// NEATTraining.init() randomly fails with a NPE in SingleNEATGenome.getCompatibilityScore()
 		EvolutionaryAlgorithm training3 = NEATUtil.constructNEATTrainer(
 			(NEATPopulation)new PersistNEATPopulation().read(new ByteArrayInputStream(serialized2.toByteArray())),
 			score);

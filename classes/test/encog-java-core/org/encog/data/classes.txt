@@ -9,7 +9,7 @@ org.encog.neural.rbf.RBFNetwork
 org.encog.ml.svm.SVM
 org.encog.neural.neat.training.NEATLinkGene
 org.encog.neural.neat.training.NEATNeuronGene
-org.encog.neural.neat.training.NEATGenome
+org.encog.neural.neat.training.SingleNEATGenome
 org.encog.neural.neat.NEATNetwork
 org.encog.neural.som.SOM
 org.encog.neural.bam.BAM
@@ -60,11 +60,11 @@ org.encog.mathutil.rbf.InverseMultiquadricFunction
 org.encog.mathutil.rbf.MexicanHatFunction
 org.encog.mathutil.rbf.MultiquadricFunction
 org.encog.mathutil.rbf.RBFEnum
-org.encog.neural.networks.BasicNetwork
-org.encog.neural.networks.NeuralDataMapping
-org.encog.neural.networks.structure.AnalyzeNetwork
-org.encog.neural.networks.structure.NetworkCODEC
-org.encog.neural.networks.structure.NeuralStructure
+org.encog.neural.ensemble.BasicNetwork
+org.encog.neural.ensemble.NeuralDataMapping
+org.encog.neural.ensemble.structure.AnalyzeNetwork
+org.encog.neural.ensemble.structure.NetworkCODEC
+org.encog.neural.ensemble.structure.NeuralStructure
 org.encog.neural.NeuralNetworkError
 org.encog.neural.prune.HiddenLayerParams
 org.encog.neural.prune.NetworkPattern

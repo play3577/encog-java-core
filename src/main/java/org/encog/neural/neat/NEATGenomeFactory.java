@@ -26,8 +26,8 @@ package org.encog.neural.neat;
 import java.util.List;
 import java.util.Random;
 
+import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.genome.GenomeFactory;
-import org.encog.neural.neat.training.NEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
@@ -60,10 +60,10 @@ public interface NEATGenomeFactory extends GenomeFactory {
 	 *            The input count.
 	 * @param outputCount
 	 *            The output count.
-	 * @return The newly factored NEATGenome.
+	 * @return The newly factored SingleNEATGenome.
 	 */
-	NEATGenome factor(List<NEATNeuronGene> neurons, List<NEATLinkGene> links,
-			int inputCount, int outputCount);
+	Genome factor(List<NEATNeuronGene> neurons, List<NEATLinkGene> links,
+				  int inputCount, int outputCount);
 
 	/**
 	 * Create a new random NEAT genome.
@@ -80,6 +80,6 @@ public interface NEATGenomeFactory extends GenomeFactory {
 	 *            The connection density. Specify 1.0 for fully connected.
 	 * @return The newly created NEAT genome.
 	 */
-	NEATGenome factor(Random rnd, NEATPopulation pop, int inputCount,
+	Genome factor(Random rnd, NEATPopulation pop, int inputCount,
 			int outputCount, double connectionDensity);
 }

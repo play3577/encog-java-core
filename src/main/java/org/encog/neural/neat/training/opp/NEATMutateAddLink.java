@@ -29,7 +29,7 @@ import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATNeuronType;
 import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.training.NEATGenome;
+import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
 /**
@@ -63,7 +63,7 @@ public class NEATMutateAddLink extends NEATMutation {
 			Genome[] offspring, int offspringIndex) {
 		int countTrysToAddLink = this.getOwner().getMaxTries();
 
-		NEATGenome target = this.obtainGenome(parents, parentIndex, offspring,
+		SingleNEATGenome target = (SingleNEATGenome) this.obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 
 		// the link will be between these two neurons
