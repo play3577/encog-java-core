@@ -29,6 +29,7 @@ import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATNeuronType;
 import org.encog.neural.neat.NEATPopulation;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATNeuronGene;
 
@@ -61,10 +62,15 @@ public class NEATMutateAddLink extends NEATMutation {
 	@Override
 	public void performOperation(Random rnd, Genome[] parents, int parentIndex,
 			Genome[] offspring, int offspringIndex) {
-		int countTrysToAddLink = this.getOwner().getMaxTries();
 
 		SingleNEATGenome target = (SingleNEATGenome) this.obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
+
+		peformOperation(target, rnd);
+	}
+
+	protected void peformOperation(SingleNEATGenome target, Random rnd) {
+		int countTrysToAddLink = this.getOwner().getMaxTries();
 
 		// the link will be between these two neurons
 		long neuron1ID = -1;
@@ -87,7 +93,7 @@ public class NEATMutateAddLink extends NEATMutation {
 					&& (neuron2.getNeuronType() != NEATNeuronType.Bias)
 					&& (neuron2.getNeuronType() != NEATNeuronType.Input)) {
 
-				if ( ((NEATPopulation)getOwner().getPopulation()).getActivationCycles() != 1
+				if ( ((AbstractNEATPopulation)getOwner().getPopulation()).getActivationCycles() != 1
 						|| neuron1.getNeuronType() != NEATNeuronType.Output) {
 					neuron1ID = neuron1.getId();
 					neuron2ID = neuron2.getId();
@@ -101,10 +107,11 @@ public class NEATMutateAddLink extends NEATMutation {
 			return;
 		}
 
-		double r = ((NEATPopulation) target.getPopulation()).getWeightRange();
+		double r = ((AbstractNEATPopulation) target.getPopulation()).getWeightRange();
 		createLink(target, neuron1ID, neuron2ID,
 				RangeRandomizer.randomize(rnd, -r, r));
 		target.sortGenes();
+
 	}
 
 }

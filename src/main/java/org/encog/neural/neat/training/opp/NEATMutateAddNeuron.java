@@ -30,10 +30,7 @@ import org.encog.mathutil.randomize.RangeRandomizer;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATNeuronType;
 import org.encog.neural.neat.NEATPopulation;
-import org.encog.neural.neat.training.SingleNEATGenome;
-import org.encog.neural.neat.training.NEATInnovation;
-import org.encog.neural.neat.training.NEATLinkGene;
-import org.encog.neural.neat.training.NEATNeuronGene;
+import org.encog.neural.neat.training.*;
 
 /**
  * Mutate a genome by adding a new node. To do this a random link is chosen. The
@@ -64,6 +61,12 @@ public class NEATMutateAddNeuron extends NEATMutation {
 			final int offspringIndex) {
 		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
+
+		performOperation(target);
+	}
+
+	protected void performOperation(SingleNEATGenome target) {
+
 		int countTrysToFindOldLink = getOwner().getMaxTries();
 
 		// cannot perform operation if there are no links
@@ -71,13 +74,14 @@ public class NEATMutateAddNeuron extends NEATMutation {
 			return;
 		}
 
-		final NEATPopulation pop = ((NEATPopulation) target.getPopulation());
+		final AbstractNEATPopulation pop = ((AbstractNEATPopulation) target.getPopulation());
 
 		// the link to split
 		NEATLinkGene splitLink = null;
 
-		final int sizeBias = ((SingleNEATGenome)parents[0]).getInputCount()
-				+ ((SingleNEATGenome)parents[0]).getOutputCount() + 10;
+		// note: used to obtain input and output count from parents
+		final int sizeBias = target.getInputCount()
+				+ target.getOutputCount() + 10;
 
 		// if there are not at least
 		int upperLimit;
@@ -98,8 +102,8 @@ public class NEATMutateAddNeuron extends NEATMutation {
 
 			if ((link.isEnabled())
 					&& (target.getNeuronsChromosome()
-							.get(getElementPos(target, fromNeuron))
-							.getNeuronType() != NEATNeuronType.Bias)) {
+					.get(getElementPos(target, fromNeuron))
+					.getNeuronType() != NEATNeuronType.Bias)) {
 				splitLink = link;
 				break;
 			}
@@ -114,11 +118,11 @@ public class NEATMutateAddNeuron extends NEATMutation {
 		final long from = splitLink.getFromNeuronID();
 		final long to = splitLink.getToNeuronID();
 
-		final NEATInnovation innovation = ((NEATPopulation)getOwner().getPopulation()).getInnovations()
+		final NEATInnovation innovation = ((AbstractNEATPopulation)getOwner().getPopulation()).getInnovations()
 				.findInnovationSplit(from, to);
 
 		// add the splitting neuron
-		final ActivationFunction af = ((NEATPopulation)getOwner().getPopulation())
+		final ActivationFunction af = ((AbstractNEATPopulation)getOwner().getPopulation())
 				.getActivationFunctions().pick(new Random());
 
 		target.getNeuronsChromosome().add(
@@ -129,7 +133,7 @@ public class NEATMutateAddNeuron extends NEATMutation {
 		createLink(target, from, innovation.getNeuronID(),
 				splitLink.getWeight());
 		createLink(target, innovation.getNeuronID(), to, pop.getWeightRange());
-		
+
 		target.sortGenes();
 	}
 

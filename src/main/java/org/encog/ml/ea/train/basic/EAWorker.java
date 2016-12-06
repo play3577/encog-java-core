@@ -31,6 +31,7 @@ import org.encog.ml.ea.exception.EARuntimeError;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.opp.EvolutionaryOperator;
 import org.encog.ml.ea.species.Species;
+import org.encog.neural.neat.training.NEATGenome;
 
 /**
  * A worker thread for an Evolutionary Algorithm.
@@ -138,10 +139,16 @@ public class EAWorker implements Callable<Object> {
 					}
 				} else {
 					// clone a child (asexual reproduction)
+					int outputs = ((NEATGenome)this.parents[0]).getOutputCount();
+
 					opp.performOperation(this.rnd, this.parents, 0,
 							this.children, 0);
 					this.children[0].setPopulation(this.parents[0]
 							.getPopulation());
+
+					if (((NEATGenome)this.children[0]).getOutputCount() > outputs)  {
+						System.out.println("outputs increased");
+					}
 				}
 
 				// process the new child

@@ -29,6 +29,7 @@ import java.util.Random;
 
 import org.encog.engine.network.activation.*;
 import org.encog.neural.neat.NEATPopulation;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
@@ -97,7 +98,7 @@ public class HyperSingleNEATGenome extends SingleNEATGenome {
 	 * @param outputCount The output count.
 	 * @param connectionDensity The connection densitoy, 1.0 for fully connected.
 	 */
-	public HyperSingleNEATGenome(final Random rnd, final NEATPopulation pop,
+	public HyperSingleNEATGenome(final Random rnd, final AbstractNEATPopulation pop,
 								 final int inputCount, final int outputCount,
 								 final double connectionDensity) {
 		super(rnd, pop, inputCount, outputCount, connectionDensity);

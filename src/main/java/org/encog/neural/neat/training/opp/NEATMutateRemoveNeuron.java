@@ -61,7 +61,11 @@ public class NEATMutateRemoveNeuron extends NEATMutation {
         final SingleNEATGenome targetGenome = (SingleNEATGenome)obtainGenome(parents, parentIndex, offspring,
                 offspringIndex);
 
-        final List<NEATNeuronGene> hiddenNeurons = targetGenome.getNeuronsChromosome().stream()
+        performOperation(targetGenome);
+    }
+
+    protected void performOperation(SingleNEATGenome targetGenome) {
+                final List<NEATNeuronGene> hiddenNeurons = targetGenome.getNeuronsChromosome().stream()
                 .filter(neuron -> neuron.getNeuronType() == NEATNeuronType.Hidden)
                 .collect(Collectors.toList());
 

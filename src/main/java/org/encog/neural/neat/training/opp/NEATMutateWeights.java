@@ -29,6 +29,7 @@ import java.util.Random;
 import org.apache.commons.math3.analysis.function.Sin;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.neural.neat.NEATPopulation;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.opp.links.MutateLinkWeight;
@@ -96,12 +97,16 @@ public class NEATMutateWeights extends NEATMutation {
 		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 
-        // cannot perform operation if there are no links
+		performOperation(target, rnd);
+	}
+
+	protected void performOperation(SingleNEATGenome target, Random rnd) {
+		// cannot perform operation if there are no links
 		if (target.getLinksChromosome().isEmpty()) {
 			return;
 		}
 
-		final double weightRange = ((NEATPopulation)getOwner().getPopulation()).getWeightRange();
+		final double weightRange = ((AbstractNEATPopulation)getOwner().getPopulation()).getWeightRange();
 		final List<NEATLinkGene> list = this.linkSelection.selectLinks(rnd,
 				target);
 		for (final NEATLinkGene gene : list) {

@@ -41,6 +41,8 @@ import org.encog.neural.neat.NEATCODEC;
 import org.encog.neural.neat.NEATLink;
 import org.encog.neural.neat.NEATNetwork;
 import org.encog.neural.neat.NEATPopulation;
+import org.encog.neural.neat.training.AbstractHyperNEATPopulation;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 
 public class HyperNEATCODEC implements GeneticCODEC {
 
@@ -49,13 +51,13 @@ public class HyperNEATCODEC implements GeneticCODEC {
 	 */
 	@Override
 	public synchronized MLMethod decode(final Genome genome) {
-		final NEATPopulation pop = (NEATPopulation) genome.getPopulation();
+		final AbstractHyperNEATPopulation pop = (AbstractHyperNEATPopulation) genome.getPopulation();
 		final Substrate substrate = pop.getSubstrate();
 		return decode(pop, substrate, genome);
 	}
 
-	public synchronized MLMethod decode(final NEATPopulation pop, final Substrate substrate,
-			final Genome genome) {
+	public synchronized MLMethod decode(final AbstractHyperNEATPopulation pop, final Substrate substrate,
+										final Genome genome) {
 		// obtain the CPPN
 		final NEATCODEC neatCodec = new NEATCODEC();
 		final NEATNetwork cppn = (NEATNetwork) neatCodec.decode(genome);
@@ -93,14 +95,14 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 			double weight = output.getData(0);
 			if (Math.abs(weight) > minWeight) {
-				double scaledWeight = scaleToRange(Math.abs(weight), minWeight, 1, 0, NNWeightRange)
+				double scaledWeight = scaleToRange(Math.abs(weight), minWeight, CPPNWeightRange, 0, NNWeightRange)
 						* Math.signum(weight);
 				linkList.add(new NEATLink(source.getId(), target.getId(),
 						scaledWeight));
 			}
 		}
 
-/*		// now create biased links
+		// now create biased links
 		input.clear();
 		final int d = substrate.getDimensions();
 		final List<SubstrateNode> biasedNodes = substrate.getBiasedNodes();
@@ -112,11 +114,11 @@ public class HyperNEATCODEC implements GeneticCODEC {
 
 			double biasWeight = output.getData(1);
 			if (Math.abs(biasWeight) > minWeight) {
-				double scaledWeight = scaleToRange(Math.abs(biasWeight), minWeight, 1, 0, NNWeightRange)
+				double scaledWeight = scaleToRange(Math.abs(biasWeight), minWeight, CPPNWeightRange, 0, NNWeightRange)
 						* Math.signum(biasWeight);
 				linkList.add(new NEATLink(0, target.getId(), scaledWeight));
 			}
-		}*/
+		}
 
 		Collections.sort(linkList);
 

@@ -40,6 +40,7 @@ import org.encog.neural.hyperneat.FactorHyperNEATGenome;
 import org.encog.neural.hyperneat.HyperNEATCODEC;
 import org.encog.neural.hyperneat.HyperSingleNEATGenome;
 import org.encog.neural.hyperneat.substrate.Substrate;
+import org.encog.neural.neat.training.AbstractHyperNEATPopulation;
 import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.NEATInnovationList;
 import org.encog.util.identity.BasicGenerateID;

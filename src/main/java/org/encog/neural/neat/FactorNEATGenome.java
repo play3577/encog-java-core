@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.encog.ml.ea.genome.Genome;
+import org.encog.neural.neat.training.AbstractNEATPopulation;
 import org.encog.neural.neat.training.SingleNEATGenome;
 import org.encog.neural.neat.training.NEATLinkGene;
 import org.encog.neural.neat.training.NEATNeuronGene;
@@ -84,7 +85,7 @@ public class FactorNEATGenome implements NEATGenomeFactory, Serializable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SingleNEATGenome factor(final Random rnd, final NEATPopulation pop,
+	public SingleNEATGenome factor(final Random rnd, final AbstractNEATPopulation pop,
 								   final int inputCount, final int outputCount,
 								   final double connectionDensity) {
 		return new SingleNEATGenome(rnd, pop, inputCount, outputCount,

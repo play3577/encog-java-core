@@ -5,6 +5,7 @@ import org.encog.ml.MLError;
 import org.encog.ml.MLRegression;
 import org.encog.ml.ea.genome.GenomeFactory;
 import org.encog.ml.ea.population.BasicPopulation;
+import org.encog.neural.hyperneat.substrate.Substrate;
 import org.encog.util.obj.ChooseObject;
 
 import java.io.Serializable;
@@ -14,8 +15,6 @@ import java.io.Serializable;
  */
 public abstract class AbstractNEATPopulation extends BasicPopulation implements Serializable,
         MLError, MLRegression {
-
-    private ChooseObject<Object> activationFunctions;
 
     public AbstractNEATPopulation(){}
 
@@ -30,6 +29,8 @@ public abstract class AbstractNEATPopulation extends BasicPopulation implements 
     public abstract double getWeightRange();
 
     public abstract ChooseObject<ActivationFunction> getActivationFunctions();
+
+    public abstract double getInitialConnectionDensity();
 
     public abstract NEATInnovationList getInnovations();
 

@@ -64,7 +64,11 @@ public class NEATMutateRemoveLink extends NEATMutation {
 		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 
-		if (target.getLinksChromosome().size() < NEATMutateRemoveLink.MIN_LINK) {
+		performOperation(target);
+	}
+
+	protected void performOperation(SingleNEATGenome target) {
+				if (target.getLinksChromosome().size() < NEATMutateRemoveLink.MIN_LINK) {
 			// don't remove from small genomes
 			return;
 		}
@@ -85,3 +89,4 @@ public class NEATMutateRemoveLink extends NEATMutation {
 		}
 	}
 }
+
