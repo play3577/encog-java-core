@@ -196,4 +196,16 @@ public class NEATLinkGene extends NEATBaseGene implements Serializable {
 	public void setEnabled(final boolean e) {
 		enabled = e;
 	}
+
+	@Override
+	public int hashCode() {
+		return (int)getInnovationId();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (((NEATLinkGene)o).getInnovationId() == this.getInnovationId()) {
+			return true;
+		} else return false;
+	}
 }

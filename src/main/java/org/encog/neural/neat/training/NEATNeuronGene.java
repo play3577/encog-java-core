@@ -152,4 +152,17 @@ public class NEATNeuronGene extends NEATBaseGene implements Serializable {
 		result.append("]");
 		return result.toString();
 	}
+
+
+	@Override
+	public int hashCode() {
+		return (int)getInnovationId();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (((NEATNeuronGene)o).getInnovationId() == this.getInnovationId()) {
+			return true;
+		} else return false;
+	}
 }

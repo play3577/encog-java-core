@@ -23,7 +23,9 @@
  */
 package org.encog.neural.neat;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationBipolarSteepenedSigmoid;
@@ -42,6 +44,7 @@ import org.encog.neural.hyperneat.HyperSingleNEATGenome;
 import org.encog.neural.hyperneat.substrate.Substrate;
 import org.encog.neural.neat.training.AbstractHyperNEATPopulation;
 import org.encog.neural.neat.training.AbstractNEATPopulation;
+import org.encog.neural.neat.training.NEATGenome;
 import org.encog.neural.neat.training.NEATInnovationList;
 import org.encog.util.identity.BasicGenerateID;
 import org.encog.util.identity.GenerateID;
@@ -596,4 +599,5 @@ public class NEATPopulation extends AbstractNEATPopulation {
 	public void setHyperNEATNNActivationFunction(ActivationFunction activationFunction) {
 		this.hyperNEATNNActivationFunction = activationFunction;
 	}
+
 }
