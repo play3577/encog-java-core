@@ -57,7 +57,7 @@ import org.encog.util.Format;
  * Automatic feature selection in neuroevolution
  * 
  */
-public class SingleNEATGenome extends NEATGenome {
+public class SingleNEATGenome extends NEATGenome implements Serializable {
 
 	/**
 	 * The list that holds the links.
@@ -71,7 +71,7 @@ public class SingleNEATGenome extends NEATGenome {
 
 	/**
 	 * Construct a genome by copying another.
-	 * 
+	 *
 	 * @param other
 	 *            The other genome.
 	 */

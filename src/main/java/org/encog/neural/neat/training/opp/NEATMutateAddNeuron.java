@@ -62,10 +62,10 @@ public class NEATMutateAddNeuron extends NEATMutation {
 		final SingleNEATGenome target = (SingleNEATGenome) obtainGenome(parents, parentIndex, offspring,
 				offspringIndex);
 
-		performOperation(target);
+		performOperation(target, rnd);
 	}
 
-	protected void performOperation(SingleNEATGenome target) {
+	protected void performOperation(SingleNEATGenome target, Random rnd) {
 
 		int countTrysToFindOldLink = getOwner().getMaxTries();
 
@@ -86,15 +86,15 @@ public class NEATMutateAddNeuron extends NEATMutation {
 		// if there are not at least
 		int upperLimit;
 		if (target.getLinksChromosome().size() < sizeBias) {
-			upperLimit = target.getNumGenes() - 1
+			upperLimit = target.getNumGenes()
 					- (int) Math.sqrt(target.getNumGenes());
 		} else {
-			upperLimit = target.getNumGenes() - 1;
+			upperLimit = target.getNumGenes();
 		}
 
 		while ((countTrysToFindOldLink--) > 0) {
 			// choose a link, use the square root to prefer the older links
-			final int i = RangeRandomizer.randomInt(0, upperLimit);
+			final int i = rnd.nextInt(upperLimit);
 			final NEATLinkGene link = target.getLinksChromosome().get(i);
 
 			// get the from neuron

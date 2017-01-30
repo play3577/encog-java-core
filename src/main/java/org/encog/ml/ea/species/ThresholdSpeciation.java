@@ -129,8 +129,8 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 			this.compatibilityThreshold += thresholdIncrement;
 		}
 
-		else if (this.population.getSpecies().size() < 2) {
-			this.compatibilityThreshold -= thresholdIncrement;
+		else if (this.population.getSpecies().size() < this.maxNumberOfSpecies) {
+			this.compatibilityThreshold -= 0.15;
 		}
 	}
 

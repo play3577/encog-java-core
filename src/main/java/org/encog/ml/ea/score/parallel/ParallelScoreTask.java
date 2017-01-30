@@ -92,6 +92,7 @@ public class ParallelScoreTask implements Runnable {
 			genome.setAdjustedScore(score);
 			BasicEA.calculateScoreAdjustment(genome, adjusters);
 		} catch(Exception ex) {
+			ex.printStackTrace();
 			owner.reportError(ex);
 		}
 	}

@@ -30,6 +30,8 @@ import org.encog.ml.ea.train.EvolutionaryAlgorithm;
 import org.encog.neural.neat.NEATNeuronType;
 import org.encog.neural.neat.training.*;
 
+import java.util.*;
+
 /**
  * This class represents a NEAT mutation. NEAT supports several different types
  * of mutations. This class provides common utility needed by any sort of a NEAT
@@ -53,6 +55,7 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 	 * The trainer that owns this class.
 	 */
 	private EvolutionaryAlgorithm owner;
+	protected double sandpileSlope = 1;
 
 	/**
 	 * Choose a random neuron.
@@ -295,5 +298,26 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 				return;
 			}
 		}
+	}
+
+	protected NEATBaseGene chooseGeneSandpile(List<NEATBaseGene> genes, Random rnd) {
+		// assign each link gene a border in probabilty space
+		Map<Double, NEATBaseGene> positionsMap = new HashMap<>();
+		double sum = 0;
+		for (int i = 0; i < genes.size(); i++) {
+			NEATBaseGene l = genes.get(i);
+			double weight = Math.pow(i+1, -sandpileSlope);
+			sum += weight;
+			positionsMap.put(sum, l);
+		}
+
+		// choose a gene based on the probability distribution
+		double random = rnd.nextDouble() * sum;
+		List<Double> positions = new ArrayList<>(positionsMap.keySet());
+		Collections.sort(positions);
+
+		double position = positions.stream()
+				.filter(p -> p >= random).findFirst().get();
+		return positionsMap.get(position);
 	}
 }

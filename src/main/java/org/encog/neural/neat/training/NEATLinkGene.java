@@ -170,7 +170,7 @@ public class NEATLinkGene extends NEATBaseGene implements Serializable {
 	 * Set the from neuron id.
 	 * @param i The from neuron id.
 	 */
-	public void setFromNeuronID(int i) {
+	public void setFromNeuronID(long i) {
 		this.fromNeuronID = i;
 	}
 	
@@ -178,7 +178,7 @@ public class NEATLinkGene extends NEATBaseGene implements Serializable {
 	 * Set the to neuron id.
 	 * @param i The to neuron id.
 	 */
-	public void setToNeuronID(int i) {
+	public void setToNeuronID(long i) {
 		this.toNeuronID = i;
 	}
 	

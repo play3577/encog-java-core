@@ -378,7 +378,7 @@ public class BasicNetwork extends BasicML implements ContainsFlat, MLContext,
 
 			if (Math.abs(value) < this.structure.getConnectionLimit()) {
 				setWeight(fromLayer, fromNeuron, toNeuron,
-						RangeRandomizer.randomize(-1, 1));
+						getRandomizer().getRandom().nextDouble(-1, 1));
 			}
 		} else {
 			if (!this.structure.isConnectionLimited()) {
