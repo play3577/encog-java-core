@@ -300,6 +300,10 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 		}
 	}
 
+	public void removeLink(final SingleNEATGenome target, NEATLinkGene link) {
+		target.getLinksChromosome().remove(link);
+	}
+
 	protected NEATBaseGene chooseGeneSandpile(List<NEATBaseGene> genes, Random rnd) {
 		// assign each link gene a border in probabilty space
 		Map<Double, NEATBaseGene> positionsMap = new HashMap<>();

@@ -77,7 +77,7 @@ public class NEATMutateRemoveLink extends NEATMutation {
 		final int index = RangeRandomizer.randomInt(0, target
 				.getLinksChromosome().size() - 1);
 		final NEATLinkGene targetGene = target.getLinksChromosome().get(index);
-		target.getLinksChromosome().remove(index);
+		removeLink(target, targetGene);
 
 		// if this orphaned any nodes, then kill them too!
 		if (!isNeuronNeeded(target, targetGene.getFromNeuronID())) {

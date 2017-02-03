@@ -475,6 +475,7 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 
 		// calculate compatibility between genomes and species
 		adjustCompatibilityThreshold();
+		System.out.printf("compat threshold: %4.2f \n", compatibilityThreshold);
 	}
 
 	/**

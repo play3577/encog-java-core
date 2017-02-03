@@ -23,6 +23,7 @@
  */
 package org.encog.neural.neat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -42,10 +43,7 @@ import org.encog.neural.hyperneat.FactorHyperNEATGenome;
 import org.encog.neural.hyperneat.HyperNEATCODEC;
 import org.encog.neural.hyperneat.HyperSingleNEATGenome;
 import org.encog.neural.hyperneat.substrate.Substrate;
-import org.encog.neural.neat.training.AbstractHyperNEATPopulation;
-import org.encog.neural.neat.training.AbstractNEATPopulation;
-import org.encog.neural.neat.training.NEATGenome;
-import org.encog.neural.neat.training.NEATInnovationList;
+import org.encog.neural.neat.training.*;
 import org.encog.util.identity.BasicGenerateID;
 import org.encog.util.identity.GenerateID;
 import org.encog.util.obj.ChooseObject;
@@ -468,6 +466,58 @@ public class NEATPopulation extends AbstractNEATPopulation {
 					this.inputCount, this.outputCount,
 					this.initialConnectionDensity);
 			defaultSpecies.add(genome);
+		}
+		defaultSpecies.setLeader(defaultSpecies.getMembers().get(0));
+		getSpecies().add(defaultSpecies);
+
+		// create initial innovations
+		setInnovations(new NEATInnovationList(this));
+	}
+
+	public void reset(List<NEATGenome> genomes) {
+		// create the genome factory
+		if (isHyperNEAT()) {
+			this.codec = new HyperNEATCODEC();
+			setGenomeFactory(new FactorHyperNEATGenome());
+		} else {
+			this.codec = new NEATCODEC();
+			setGenomeFactory(new FactorNEATGenome());
+		}
+
+		// create the new genomes
+		getSpecies().clear();
+
+		// set counters to continue from last
+		long highestInnovationID = genomes.stream()
+				.flatMap(g -> {
+					List<NEATBaseGene> genes = new ArrayList<NEATBaseGene>(g.getLinksChromosome());
+					genes.addAll(g.getNeuronsChromosome());
+					return genes.stream();
+				})
+				.mapToLong(g -> g.getInnovationId())
+                .reduce((a,b) -> Long.compare(a,b) > 0 ? a : b)
+				.getAsLong();
+
+		long highestId = genomes.stream()
+				.flatMap(g -> {
+					List<NEATBaseGene> genes = new ArrayList<NEATBaseGene>(g.getLinksChromosome());
+					genes.addAll(g.getNeuronsChromosome());
+					return genes.stream();
+				})
+				.mapToLong(g -> g.getId())
+				.reduce((a,b) -> Long.compare(a,b) > 0 ? a : b)
+				.getAsLong();
+
+		getInnovationIDGenerate().setCurrentID(highestInnovationID);
+		getGeneIDGenerate().setCurrentID(highestId);
+
+		// create one default species
+		final BasicSpecies defaultSpecies = new BasicSpecies();
+		defaultSpecies.setPopulation(this);
+
+		// create the initial population
+		for (int i = 0; i < genomes.size(); i++) {
+			defaultSpecies.add(genomes.get(i));
 		}
 		defaultSpecies.setLeader(defaultSpecies.getMembers().get(0));
 		getSpecies().add(defaultSpecies);
