@@ -99,13 +99,19 @@ public class NEATCODEC implements GeneticCODEC, Serializable {
 			lookup.put(neuronGene.getId(), i);
 		}
 
+
 		// loop over connections
 		for (int i = 0; i < linksChromosome.size(); i++) {
 			final NEATLinkGene linkGene = linksChromosome.get(i);
-			if (linkGene.isEnabled()) {
-				links.add(new NEATLink(lookup.get(linkGene.getFromNeuronID()),
-						lookup.get(linkGene.getToNeuronID()), linkGene
-								.getWeight()));
+            try {
+				if (linkGene.isEnabled()) {
+					links.add(new NEATLink(lookup.get(linkGene.getFromNeuronID()),
+							lookup.get(linkGene.getToNeuronID()), linkGene
+							.getWeight()));
+                }
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+                // leaving this as is until i find how bad link genes are let into the pop
 			}
 
 		}

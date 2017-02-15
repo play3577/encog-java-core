@@ -130,7 +130,7 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 		}
 
 		else if (this.population.getSpecies().size() < this.maxNumberOfSpecies) {
-			this.compatibilityThreshold -= 0.15;
+			this.compatibilityThreshold -= 0.25;
 		}
 	}
 
@@ -457,7 +457,7 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 		}
 
 		if (speciesCollection.size() == 0) {
-			throw new EncogError("Can't speciate, there are no species.2");
+			throw new EncogError("Can't speciate, there are no species");
 		}
 		if (totalSpeciesScore < Encog.DEFAULT_DOUBLE_EQUAL) {
 			// This should not happen much, or if it does, only in the
@@ -475,7 +475,7 @@ public abstract class ThresholdSpeciation implements Speciation, Serializable {
 
 		// calculate compatibility between genomes and species
 		adjustCompatibilityThreshold();
-		System.out.printf("compat threshold: %4.2f \n", compatibilityThreshold);
+//		System.out.printf("compat threshold: %4.2f \n", compatibilityThreshold);
 	}
 
 	/**

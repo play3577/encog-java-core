@@ -650,4 +650,27 @@ public class NEATPopulation extends AbstractNEATPopulation {
 		this.hyperNEATNNActivationFunction = activationFunction;
 	}
 
+	public List<NEATGenome> getIndividuals() {
+		return getSpecies().stream()
+				.flatMap(s -> s.getMembers().stream())
+				.map(g -> (NEATGenome) g)
+				.collect(Collectors.toList());
+	}
+
+	public double getMPC() {
+		List<Genome> genomes = getSpecies().stream()
+				.flatMap(s -> s.getMembers().stream())
+				.collect(Collectors.toList());
+
+		long numLinks = genomes.stream()
+				.flatMap(g -> ((NEATGenome)g).getLinksChromosome().stream())
+				.count();
+
+		long numNodes = genomes.stream()
+				.flatMap(g -> ((NEATGenome)g).getNeuronsChromosome().stream())
+				.count();
+
+		return (numLinks + numNodes) / genomes.size();
+	}
+
 }

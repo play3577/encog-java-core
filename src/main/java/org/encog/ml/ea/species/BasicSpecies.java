@@ -111,6 +111,7 @@ public class BasicSpecies implements Serializable, Species {
 	@Override
 	public void add(final Genome genome) {
 		genome.setPopulation(this.population);
+        genome.setSpecies(this);
 		this.members.add(genome);
 	}
 
