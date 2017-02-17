@@ -670,7 +670,7 @@ public class NEATPopulation extends AbstractNEATPopulation {
 				.flatMap(g -> ((NEATGenome)g).getNeuronsChromosome().stream())
 				.count();
 
-		return (numLinks + numNodes) / genomes.size();
+		return (numLinks + numNodes) / (double)genomes.size();
 	}
 
 }

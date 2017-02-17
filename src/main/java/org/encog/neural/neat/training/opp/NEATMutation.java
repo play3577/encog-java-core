@@ -138,7 +138,9 @@ public abstract class NEATMutation implements EvolutionaryOperator {
 		// now create this link
 		final NEATLinkGene linkGene = new NEATLinkGene(neuron1ID, neuron2ID,
 				true, innovation.getInnovationID(), weight);
-		target.getLinksChromosome().add(linkGene);
+		if (!target.getLinksChromosome().contains(linkGene)) {
+			target.getLinksChromosome().add(linkGene);
+		}
 	}
 
 	/**
